@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace EmpiricalLab
 {
@@ -76,7 +77,8 @@ namespace EmpiricalLab
                 Console.WriteLine("\nОтримано наступні вихідні дані");
                 Console.WriteLine(string.Join(" ", data));
 
-                Array.Sort(data);
+                // Виклик власного методу сортування вставками
+                InsertionSort(data);
 
                 Console.WriteLine("\nСформовано варіаційний ряд");
                 Console.WriteLine(string.Join(" ", data));
@@ -86,6 +88,8 @@ namespace EmpiricalLab
                 Console.WriteLine("------------------------------------------------------------------");
 
                 int integralFrequency = 0;
+                double sumWi = 0;
+                List<string> wiValues = new List<string>();
                 var groups = data.GroupBy(x => x).OrderBy(g => g.Key);
 
                 foreach (var group in groups)
@@ -93,10 +97,34 @@ namespace EmpiricalLab
                     int xi = group.Key;
                     int mi = group.Count();
                     integralFrequency += mi;
+
                     double wi = (double)mi / size;
+                    sumWi += wi;
+                    wiValues.Add(wi.ToString("F4"));
 
                     Console.WriteLine($"{xi,13} | {mi,12} | {integralFrequency,19} | {wi,13:F4}");
                 }
+
+                Console.WriteLine("\nКонтроль обчислень шляхом підсумовування частостей (wi):");
+                Console.WriteLine(string.Join(" + ", wiValues) + $" = {sumWi:F4}");
+            }
+        }
+
+        // Метод сортування вставками
+        static void InsertionSort(int[] array)
+        {
+            for (int i = 1; i < array.Length; i++)
+            {
+                int key = array[i];
+                int j = i - 1;
+
+                // Переміщуємо елементи, які більші за key, на одну позицію вперед
+                while (j >= 0 && array[j] > key)
+                {
+                    array[j + 1] = array[j];
+                    j = j - 1;
+                }
+                array[j + 1] = key;
             }
         }
     }
