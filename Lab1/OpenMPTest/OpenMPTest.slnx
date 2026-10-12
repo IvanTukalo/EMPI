@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="OpenMPTest.vcxproj" Id="c2b73d18-3bd9-46f9-9b5e-4dba716cf77e" />
+</Solution>
